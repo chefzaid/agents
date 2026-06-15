@@ -15,13 +15,9 @@ can be applied to projects, versioned, reviewed, and improved over time.
 
 ## How To Use
 
-1. Choose the agent file that matches the work you want automated.
-2. Copy the file contents into the AI tool, project instructions, or agent
-   configuration where the instructions should run.
-3. Adjust project-specific references such as `TODO.md`, test commands,
-   documentation paths, or coverage requirements.
-4. Commit local customizations in the target project if they are intended to
-   become part of that project's workflow.
+1. Checkout this repo to the worksapce where you have a project you want to implement.
+2. Copy TODO.md to your project and adjust it with the features and requirements you want.
+3. Instruct your AI agent to apply the workflow you are interested in against another project in your workspace.
 
 ## Authoring Guidelines
 
