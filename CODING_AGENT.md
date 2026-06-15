@@ -50,7 +50,7 @@ This file governs the automated, iterative release cycle for this codebase. Foll
 ### Phase 6: Test Coverage Gate
 - [ ] **Run Test Suites:** Run the entire test suite across frontend and backend environments.
 - [ ] **Coverage Enforcement:** Verify code coverage remains strictly **above 85%** for both layers. If the new code drops the average or lacks testing, author unit/integration specs until the 85%+ target is met.
-- [ ] **Critical Path Testing:** Ensure that all critical business logic and edge cases are covered by Playwright end-to-end tests.
+- [ ] **Critical Path Testing:** Add Playwright tests to ensure that the new functionality works as expected in end-to-end scenarios.
 - [ ] **Regression Check:** Confirm that no existing features are broken by the new implementation.
 
 ### Phase 7: Documentation & Dependency Sync
