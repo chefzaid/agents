@@ -1,6 +1,6 @@
 # Continuous Execution Loop
 
-This file governs the automated, iterative release cycle for this codebase. Follow this loop sequentially, processing one task at a time.
+This file governs the automated, iterative coding cycle for this codebase. Follow this loop sequentially, processing one task at a time.
 
 ---
 
