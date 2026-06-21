@@ -18,23 +18,28 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 ## Recurrent Tasks Checklist
 *Apply these 7 phases to the newly implemented task code BEFORE marking it complete.*
 
-### Phase 1: Code Decomposition & Architecture
+### Phase 1: Implementation & UI Implementation
+- [ ] **Code Implementation:** Ensure that the feature is fully implemented, no dead code remains, and all edge cases are handled.
+- [ ] **UI Implementation:** Ensure that the feature has its corresponding UI implemented, if applicable, and that it is fully functional and visually consistent with the rest of the application.
+- [ ] **Full Implementation:** Ensure that there are no mocked services or hardcoded values, and that it is fully localized for all supported languages.
+
+### Phase 2: Code Decomposition & Architecture
 - [ ] **File Length Check:** Verify that no modified or newly created file exceeds 500 lines of code (LOC). If it does, split it into modular, single-responsibility components or services.
 - [ ] **Readability:** Refactor overly nested logic or confusing conditional blocks to ensure long-term maintainability.
 - [ ] **Design Patterns:** Ensure proper use of design patterns and architectural principles for scalability and maintainability.
 - [ ] **Tech Stack Adherence:** Confirm that the implementation follows the project's tech stack conventions, including language features, framework usage, and coding standards.
 - [ ] **Industry Standards:** Verify that the code adheres to industry best practices, including SOLID principles, DRY, KISS, and YAGNI.
 
-### Phase 2: Deduplication & Reusability
+### Phase 3: Deduplication & Reusability
 - [ ] **DRY Check:** Scan existing utilities, components, and service layers.
 - [ ] **Centralization:** Ensure no redundant logic was added. Reuse existing methods or global components instead of spinning up identical custom code.
 
-### Phase 3: Static Analysis & Quality Gates
+### Phase 4: Static Analysis & Quality Gates
 - [ ] **Bugs:** Make sure the code and the UI is free of any visual glitches, misaligned elements, or broken interactions.
 - [ ] **Linting & Formatting:** Run the project's linter and formatter scripts over the changed files. Fix all structural style warnings automatically.
 - [ ] **Workspace Health:** Inspect the compiler/IDE "Problems" tab outputs and resolve 100% of errors, warnings, or type mismatches.
 
-### Phase 4: Security Hardening (OWASP Top 10 Guard)
+### Phase 5: Security Hardening (OWASP Top 10 Guard)
 - [ ] **Input & Injection Shielding:** Ensure all user inputs, parameters, and query bindings related to the new feature are fully sanitized or strictly parameterized.
 - [ ] **XSS/CSRF Cross-Check:** Confirm proper data escaping/encoding on the frontend and token validation checks on state-changing backend endpoints.
 - [ ] **Access Control:** Verify that any new data entry points or API routes enforce proper authorization checks.
@@ -42,17 +47,17 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 - [ ] **Dependency Audit:** If any new external packages were added, run a vulnerability scan and ensure they are up-to-date.
 - [ ] **Security Testing:** Run automated security tests (OWASP, ...) to detect vulnerabilities in the new code.
 
-### Phase 5: Performance Optimization & Bug Hunting
+### Phase 6: Performance Optimization & Bug Hunting
 - [ ] **Memory Safety:** Audit loops, async calls, or hooks for unclosed streams, missing cleanup listeners, or potential memory leaks.
 - [ ] **Null/Undefined Guards:** Add defensive optional chaining or explicit null checks to prevent runtime pointer exceptions.
 - [ ] **Efficiency Audit:** Optimize any heavy loop operations, multithreading, or network queries.
 
-### Phase 6: Test Coverage Gate
+### Phase 7: Test Coverage Gate
 - [ ] **Run Test Suites:** Run the entire test suite across frontend and backend environments.
 - [ ] **Coverage Enforcement:** Verify code coverage remains strictly **above 85%** for both layers. If the new code drops the average or lacks testing, author unit/integration specs until the 85%+ target is met.
 - [ ] **Critical Path Testing:** Add Playwright tests to ensure that the new functionality works as expected in end-to-end scenarios.
 - [ ] **Regression Check:** Confirm that no existing features are broken by the new implementation.
 
-### Phase 7: Documentation & Dependency Sync
+### Phase 8: Documentation & Dependency Sync
 - [ ] **Dependency Update:** Make sure that all dependencies are up-to-date with latest LTS versions and that no unused packages remain in the project.
 - [ ] **Docs Update:** Update documentation files and schemas to perfectly reflect the new functionality and its setup.
