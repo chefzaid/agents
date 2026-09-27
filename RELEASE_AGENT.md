@@ -6,18 +6,18 @@ This file governs the automated, iterative release cycle for this codebase. Foll
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Identify the release target, including version, branch, milestone, merged changes, open blockers, deployment environment, and release owner.
+1. **DISCOVER:** Identify the release target, including version, branch, milestone, merged changes, open blockers, deployment environment, and release owner. If there are no unreleased changes, stop the loop.
 2. **PLAN:** Define the release scope, acceptance criteria, rollback path, verification commands, communication needs, and deployment order.
 3. **PREPARE:** Update version metadata, changelogs, release notes, documentation, migrations, and configuration required for the release.
 4. **RECURRENT CHECKS:** Immediately pass the release candidate through the **Recurrent Release Checklist** below.
-5. **PUBLISH:** Create the release artifact, tag, package, deployment, or announcement only after all gates pass.
-6. **DONE & REPEAT:** Record the release outcome, monitor for issues, complete post-release tasks, and restart the loop for the next release target.
+5. **PUBLISH:** Create the release artifact, tag, package, deployment, or announcement only after all gates pass. If a gate fails, do not publish: record the blocker and stop for human review.
+6. **DONE & REPEAT:** Run Phase 7 of the checklist, then restart the loop for the next release target.
 
 ---
 
 ## Recurrent Release Checklist
 
-*Apply these 7 phases to the release candidate BEFORE publishing it.*
+*Apply Phases 1-6 to the release candidate BEFORE publishing it, and Phase 7 after publishing.*
 
 ### Phase 1: Scope & Readiness
 

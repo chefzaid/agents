@@ -2,6 +2,10 @@
 
 Sample backlog file to be copied into projects and adapted for the project-specific features. Then used with the current repo's agentic workflows.
 
+## Bugs to fix
+
+- [ ] Describe a bug found during testing, with steps to reproduce.
+
 ## Big Feature
 
 - [x] Implement the new big feature with all its subcomponents and integrations.

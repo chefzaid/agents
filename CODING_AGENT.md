@@ -6,21 +6,21 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Scan the file `TODO.md` and identify the **simplest, lowest-complexity task** that is not yet implemented.
+1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. If no eligible item remains, stop the loop.
 2. **PLAN:** Write a concise implementation plan for the task at hand, including acceptance criteria, files to modify, tests to update, and any other relevant details.
 3. **IMPLEMENT:** Write the clean, minimal code required to satisfy the task requirements.
 4. **RECURRENT CHECKS:** Immediately pass the new implementation through the **Recurrent Tasks Checklist** below.
-5. **COMMIT:** Create a clean Git commit for the completed task, with a very brief message without putting any co-author.
-6. **DONE & REPEAT:** Mark the task as done in TODO once all related items are completed. Then restart the loop at Step 1.
+5. **DONE:** Mark the task as done in `TODO.md` once all related items are completed. If a check cannot pass, mark the task as blocked with the reason instead and revert or set aside its unfinished changes.
+6. **COMMIT & REPEAT:** Create a clean Git commit for the task, including the `TODO.md` update, with a very brief message without putting any co-author. Then restart the loop at Step 1.
 
 ---
 
 ## Recurrent Tasks Checklist
-*Apply these 7 phases to the newly implemented task code BEFORE marking it complete.*
+*Apply these 8 phases to the newly implemented task code BEFORE marking it complete.*
 
 ### Phase 1: Implementation & UI Implementation
 - [ ] **Code Implementation:** Ensure that the feature is fully implemented, no dead code remains, and all edge cases are handled.
-- [ ] **UI Implementation:** Ensure that the feature has its corresponding UI implemented, if applicable, and that it is fully functional and visually consistent with the rest of the application.
+- [ ] **UI Implementation:** Ensure that the feature has its corresponding UI implemented, if applicable, and that it is fully functional, visually consistent with the rest of the application, and free of visual glitches, misaligned elements, or broken interactions.
 - [ ] **Full Implementation:** Ensure that there are no mocked services or hardcoded values, and that it is fully localized for all supported languages.
 
 ### Phase 2: Code Decomposition & Architecture
@@ -28,14 +28,13 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 - [ ] **Readability:** Refactor overly nested logic or confusing conditional blocks to ensure long-term maintainability.
 - [ ] **Design Patterns:** Ensure proper use of design patterns and architectural principles for scalability and maintainability.
 - [ ] **Tech Stack Adherence:** Confirm that the implementation follows the project's tech stack conventions, including language features, framework usage, and coding standards.
-- [ ] **Industry Standards:** Verify that the code adheres to industry best practices, including SOLID principles, DRY, KISS, and YAGNI.
+- [ ] **Industry Standards:** Verify that the code adheres to industry best practices, including SOLID principles, KISS, and YAGNI.
 
 ### Phase 3: Deduplication & Reusability
 - [ ] **DRY Check:** Scan existing utilities, components, and service layers.
 - [ ] **Centralization:** Ensure no redundant logic was added. Reuse existing methods or global components instead of spinning up identical custom code.
 
 ### Phase 4: Static Analysis & Quality Gates
-- [ ] **Bugs:** Make sure the code and the UI is free of any visual glitches, misaligned elements, or broken interactions.
 - [ ] **Linting & Formatting:** Run the project's linter and formatter scripts over the changed files. Fix all structural style warnings automatically.
 - [ ] **Workspace Health:** Inspect the compiler/IDE "Problems" tab outputs and resolve 100% of errors, warnings, or type mismatches.
 
@@ -59,5 +58,5 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 - [ ] **Regression Check:** Confirm that no existing features are broken by the new implementation.
 
 ### Phase 8: Documentation & Dependency Sync
-- [ ] **Dependency Update:** Make sure that all dependencies are up-to-date with latest LTS versions and that no unused packages remain in the project.
+- [ ] **Dependency Hygiene:** Make sure that any dependency added or changed by the task uses a current LTS version and that no unused packages remain.
 - [ ] **Docs Update:** Update documentation files and schemas to perfectly reflect the new functionality and its setup.
