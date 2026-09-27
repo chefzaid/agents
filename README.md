@@ -12,6 +12,7 @@ can be applied to projects, versioned, reviewed, and improved over time.
 | [CODING_AGENT.md](CODING_AGENT.md)     | Continuous loop for coding tasks and quality gates. |
 | [RELEASE_AGENT.md](RELEASE_AGENT.md)   | Continuous loop for releases and deployment checks. |
 | [TESTING_AGENT.md](TESTING_AGENT.md)   | Continuous loop for UI testing and regression checks. |
+| [INFRA_AGENT.md](INFRA_AGENT.md)       | Continuous loop for infrastructure and deployment changes. |
 
 ## How To Use
 
