@@ -21,7 +21,7 @@ The repository is the source of truth. Prefer declarative, idempotent, reviewabl
 
 ## Master Loop Control
 
-1. **DISCOVER:** Scan `TODO.md` and identify the simplest, lowest-risk infrastructure task that is not implemented and has no unresolved dependency. Do not select production-destructive work merely because it is short.
+1. **DISCOVER:** Scan `TODO.md` and identify the simplest, lowest-risk infrastructure task that is not implemented and has no unresolved dependency. Do not select production-destructive work merely because it is short. If no eligible task remains, stop the loop.
 2. **ASSESS:** Classify the change by environment, blast radius, data risk, downtime risk, security impact, external dependencies, and required approval. Record assumptions and blockers.
 3. **PLAN:** Write a concise implementation plan containing:
    - acceptance criteria and affected environments;
@@ -30,19 +30,19 @@ The repository is the source of truth. Prefer declarative, idempotent, reviewabl
    - validation commands, automated tests, observability signals, and success/failure thresholds;
    - secrets, RBAC, networking, data, and supply-chain implications.
 4. **IMPLEMENT:** Make the smallest complete change using existing modules, roles, charts, overlays, and conventions. Keep environment-specific values outside shared base definitions.
-5. **VALIDATE:** Run every applicable phase in the **Infrastructure Recurrent Tasks Checklist** below. Record skipped checks with a concrete reason; never report an unavailable check as passed.
-6. **REVIEW DIFF & PLAN:** Inspect the complete Git diff and generated deployment plan/rendered manifests. Reject unexpected deletion, replacement, privilege expansion, public exposure, mutable image tags, secret material, or unrelated changes.
-7. **DEPLOY SAFELY:** Apply through the approved CI/CD or GitOps path. Use canary, rolling, or staged rollout where possible. Production deployment requires the repository's normal approval and change-control policy.
-8. **VERIFY & OBSERVE:** Confirm readiness, health, logs, metrics, alerts, events, SLOs, and user-facing behavior for the defined observation window. Verify that backups and restore paths remain valid.
-9. **ROLL BACK ON FAILURE:** Stop the rollout when thresholds fail. Execute the documented rollback; preserve logs and evidence; open a follow-up task for root cause. Do not continue forward merely to complete the loop.
-10. **COMMIT:** Create one clean Git commit for the completed task with a short imperative message and no co-author trailer. Never commit secrets, generated credentials, kubeconfigs, state files, or unreviewed artifacts.
-11. **DONE & REPEAT:** Mark the task complete in `TODO.md` only after acceptance criteria, checks, deployment verification, documentation, and rollback readiness are satisfied. Then restart at Step 1.
+5. **VALIDATE:** Run every applicable phase in Phases 1-7 of the **Infrastructure Recurrent Tasks Checklist** below. Record skipped checks with a concrete reason; never report an unavailable check as passed.
+6. **REVIEW DIFF & PLAN:** Inspect the complete Git diff and generated deployment plan (Terraform/OpenTofu plan, Helm or Argo CD diff, rendered manifests). Reject unexpected deletion, replacement, privilege expansion, public exposure, mutable image tags, secret material, or unrelated changes.
+7. **COMMIT:** Create one clean Git commit for the reviewed change with a short imperative message and no co-author trailer. Never commit secrets, generated credentials, kubeconfigs, state files, or unreviewed artifacts.
+8. **DEPLOY SAFELY:** Apply through the approved CI/CD or GitOps path. Use canary, rolling, or staged rollout where possible. Production deployment requires the repository's normal approval and change-control policy.
+9. **VERIFY & OBSERVE:** Confirm readiness, health, logs, metrics, alerts, events, SLOs, and user-facing behavior for the defined observation window. Verify that backups and restore paths remain valid.
+10. **ROLL BACK ON FAILURE:** Stop the rollout when thresholds fail. Execute the documented rollback; preserve logs and evidence; open a follow-up task for root cause. Do not continue forward merely to complete the loop.
+11. **DONE & REPEAT:** Complete Phase 10 of the checklist. Once acceptance criteria, checks, deployment verification, documentation, and rollback readiness are satisfied, mark the task complete in `TODO.md` and commit that update. Then restart at Step 1.
 
 ---
 
 ## Infrastructure Recurrent Tasks Checklist
 
-Apply all relevant phases to the current task before marking it complete.
+Apply Phases 1-7 before committing and deploying, Phases 8-9 during deployment and verification, and Phase 10 before marking the task complete.
 
 ### Phase 1: Scope, Risk & Change Safety
 
@@ -104,7 +104,7 @@ Apply all relevant phases to the current task before marking it complete.
 
 ### Phase 6: Secrets, Identity & Supply-Chain Security
 
-- [ ] **Secret Scan:** Scan the full diff and relevant history with the repository-approved tool; revoke and rotate any exposed credential immediately.
+- [ ] **Secret Scan:** Scan the full diff and relevant history with the repository-approved tool; if a credential is exposed, stop and flag it for revocation and rotation.
 - [ ] **Secret Lifecycle:** Source secrets from Vault, External Secrets, SOPS, or the approved manager; use least-privilege authentication, scoped paths, short lifetimes, rotation, and audit logging.
 - [ ] **Encryption:** Enforce TLS in transit, validate certificates, encrypt sensitive data at rest, and protect encryption keys separately from encrypted data.
 - [ ] **Authorization:** Review cloud IAM, Kubernetes RBAC, sudoers, CI identities, OIDC claims, and service-to-service permissions for least privilege and separation of duties.
@@ -118,7 +118,6 @@ Apply all relevant phases to the current task before marking it complete.
 - [ ] **Unit/Module Tests:** Run module, role, chart, policy, and script tests relevant to the change.
 - [ ] **Ephemeral Integration:** Provision or use a disposable environment and exercise install, upgrade, repeat run, failure, and teardown paths.
 - [ ] **Security Tests:** Run IaC and image scanners such as Checkov/tfsec/Trivy, secret scanning, policy-as-code tests, and repository-standard security suites.
-- [ ] **Plan/Diff Gate:** Review Terraform/OpenTofu plan, Helm diff, Argo CD diff, or equivalent. Explicitly approve replacements, deletions, RBAC expansion, firewall changes, public endpoints, and state migrations.
 - [ ] **Negative Tests:** Confirm unauthorized access, disallowed network paths, invalid inputs, and missing secrets fail safely.
 - [ ] **No False Passes:** Tests must fail on errors; do not mask exit codes, use unconditional `|| true`, or treat warnings as success without an approved exception.
 

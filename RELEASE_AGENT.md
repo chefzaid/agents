@@ -11,7 +11,7 @@ This file governs the automated, iterative release cycle for this codebase. Foll
 3. **PREPARE:** Update version metadata, changelogs, release notes, documentation, migrations, and configuration required for the release.
 4. **RECURRENT CHECKS:** Immediately pass the release candidate through the **Recurrent Release Checklist** below.
 5. **PUBLISH:** Create the release artifact, tag, package, deployment, or announcement only after all gates pass. If a gate fails, do not publish: record the blocker and stop for human review.
-6. **DONE & REPEAT:** Run Phase 7 of the checklist, then restart the loop for the next release target.
+6. **DONE & REPEAT:** Run Phase 7 of the checklist. If it finds a regression, execute the Rollback Plan and stop for human review; otherwise restart the loop for the next release target.
 
 ---
 

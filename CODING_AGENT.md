@@ -6,7 +6,7 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. If no eligible item remains, stop the loop.
+1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. Skip items marked blocked. If no eligible item remains, stop the loop.
 2. **PLAN:** Write a concise implementation plan for the task at hand, including acceptance criteria, files to modify, tests to update, and any other relevant details.
 3. **IMPLEMENT:** Write the clean, minimal code required to satisfy the task requirements.
 4. **RECURRENT CHECKS:** Immediately pass the new implementation through the **Recurrent Tasks Checklist** below.
