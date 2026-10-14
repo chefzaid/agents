@@ -6,12 +6,20 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. Skip items marked blocked. If no eligible item remains, stop the loop.
-2. **PLAN:** Write a concise implementation plan for the task at hand, including acceptance criteria, files to modify, tests to update, and any other relevant details.
-3. **IMPLEMENT:** Write the clean, minimal code required to satisfy the task requirements.
+1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first, then any **Needs Input** entry the owner has answered; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. Skip items marked blocked and items whose only remaining work is waiting in **Needs Input**. If no eligible item remains, stop the loop.
+2. **PLAN:** Write a concise implementation plan for the task at hand, including acceptance criteria, files to modify, tests to update, and any other relevant details. If part of the task needs the owner's decision or information (an unclear requirement, a product choice, a missing credential or external account), record that part in **Needs Input** following the **TODO Logging Rules** below and plan only the rest.
+3. **IMPLEMENT:** Write the clean, minimal code required to satisfy the task requirements. Log any bug or issue found along the way that is outside this task in **Bugs to fix** instead of fixing it now.
 4. **RECURRENT CHECKS:** Immediately pass the new implementation through the **Recurrent Tasks Checklist** below.
-5. **DONE:** Mark the task as done in `TODO.md` once all related items are completed. If a check cannot pass, mark the task as blocked with the reason instead and revert or set aside its unfinished changes.
+5. **DONE:** Mark the task as done in `TODO.md` once all related items are completed. If only the parts recorded in **Needs Input** remain, leave the task open and note which parts are done. If a check cannot pass, log the cause in **Bugs to fix**, mark the task as blocked with a reference to that entry, and revert or set aside its unfinished changes.
 6. **COMMIT & REPEAT:** Create a clean Git commit for the task, including the `TODO.md` update, with a very brief message without putting any co-author. Then restart the loop at Step 1.
+
+---
+
+## TODO Logging Rules
+
+- **Bugs to fix:** Any bug, failing test, broken build, security finding, or code smell discovered in code the current task does not touch goes in **Bugs to fix** with the file or area, what is wrong, and how to reproduce it. Do not widen the current task to fix it; a later loop picks it up. Skip issues already listed.
+- **Needs Input:** When a step cannot advance without the owner (ambiguous requirement, product or design decision, missing credential, paid service, or external account), add one entry to **Needs Input** with the precise question, the options you see, and the task it belongs to. Set aside only that part: finish the rest of the task, keep the waiting part out of the code (no guessed values or placeholder implementations), and move on.
+- **Answers:** When an entry in **Needs Input** has an answer, treat the waiting part as a new eligible item, implement it, then remove the entry.
 
 ---
 

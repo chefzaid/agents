@@ -21,8 +21,8 @@ The repository is the source of truth. Prefer declarative, idempotent, reviewabl
 
 ## Master Loop Control
 
-1. **DISCOVER:** Scan `TODO.md` and identify the simplest, lowest-risk infrastructure task that is not implemented and has no unresolved dependency. Do not select production-destructive work merely because it is short. If no eligible task remains, stop the loop.
-2. **ASSESS:** Classify the change by environment, blast radius, data risk, downtime risk, security impact, external dependencies, and required approval. Record assumptions and blockers.
+1. **DISCOVER:** Scan `TODO.md`, take open infrastructure items in **Bugs to fix** and answered **Needs Input** entries first, then identify the simplest, lowest-risk infrastructure task that is not implemented and has no unresolved dependency. Skip parts still waiting in **Needs Input**. Do not select production-destructive work merely because it is short. If no eligible task remains, stop the loop.
+2. **ASSESS:** Classify the change by environment, blast radius, data risk, downtime risk, security impact, external dependencies, and required approval. Record assumptions. Record anything only the owner can decide or provide in **Needs Input** following the **TODO Logging Rules** below, and continue with the parts that do not depend on it.
 3. **PLAN:** Write a concise implementation plan containing:
    - acceptance criteria and affected environments;
    - files, manifests, roles, scripts, pipelines, and documentation to modify;
@@ -35,8 +35,16 @@ The repository is the source of truth. Prefer declarative, idempotent, reviewabl
 7. **COMMIT:** Create one clean Git commit for the reviewed change with a short imperative message and no co-author trailer. Never commit secrets, generated credentials, kubeconfigs, state files, or unreviewed artifacts.
 8. **DEPLOY SAFELY:** Apply through the approved CI/CD or GitOps path. Use canary, rolling, or staged rollout where possible. Production deployment requires the repository's normal approval and change-control policy.
 9. **VERIFY & OBSERVE:** Confirm readiness, health, logs, metrics, alerts, events, SLOs, and user-facing behavior for the defined observation window. Verify that backups and restore paths remain valid.
-10. **ROLL BACK ON FAILURE:** Stop the rollout when thresholds fail. Execute the documented rollback; preserve logs and evidence; open a follow-up task for root cause. Do not continue forward merely to complete the loop.
-11. **DONE & REPEAT:** Complete Phase 10 of the checklist. Once acceptance criteria, checks, deployment verification, documentation, and rollback readiness are satisfied, mark the task complete in `TODO.md` and commit that update. Then restart at Step 1.
+10. **ROLL BACK ON FAILURE:** Stop the rollout when thresholds fail. Execute the documented rollback; preserve logs and evidence; log the failure in **Bugs to fix** for root cause. Do not continue forward merely to complete the loop.
+11. **DONE & REPEAT:** Complete Phase 10 of the checklist. Once acceptance criteria, checks, deployment verification, documentation, and rollback readiness are satisfied, mark the task complete in `TODO.md` and commit that update. If only parts recorded in **Needs Input** remain, leave the task open and note which parts are done. Then restart at Step 1.
+
+---
+
+## TODO Logging Rules
+
+- **Bugs to fix:** Every defect found outside the current change goes in **Bugs to fix** with the environment, resource, evidence (command and output, plan excerpt, scanner finding), and risk: misconfiguration, live drift, failing health checks, scanner findings, insecure defaults, broken automation, or a failed rollout. Skip issues already listed. Do not widen the current change to fix it.
+- **Needs Input:** Anything only the owner can decide or provide goes in **Needs Input** with the precise question, the options and their risk, and the task and environment it blocks: target environment or account, approvals and maintenance windows, credentials and access, cost-impacting choices, exceptions to security controls, and destructive or irreversible steps. Set aside only that step (often the deployment), finish and commit the reviewed parts that are safe on their own, and continue with other independent tasks.
+- **Answers:** When an entry in **Needs Input** has an answer, resume the waiting step on the next loop, then remove the entry.
 
 ---
 
@@ -147,13 +155,13 @@ Apply Phases 1-7 before committing and deploying, Phases 8-9 during deployment a
 - [ ] **Configuration Reference:** Document variables, defaults, allowed values, required secrets by name/path only, and environment overrides.
 - [ ] **Operational Handoff:** Document dashboards, alerts, log queries, SLOs, known limitations, maintenance tasks, and escalation ownership.
 - [ ] **Evidence:** Attach or reference validation results, plans/diffs, scanner summaries, deployment revision, and rollback verification without exposing secrets.
-- [ ] **TODO Sync:** Mark only fully satisfied work complete and create explicit follow-up tasks for deferred risks or approved exceptions.
+- [ ] **TODO Sync:** Mark only fully satisfied work complete, log deferred defects in **Bugs to fix**, keep pending owner decisions in **Needs Input**, and create explicit follow-up tasks for approved exceptions.
 
 ---
 
 ## Mandatory Stop Conditions
 
-Stop the loop and request human review when any of the following occurs:
+Stop work on the affected task and request human review by adding an entry to **Needs Input** (and an entry in **Bugs to fix** when a defect caused it) when any of the following occurs. Do not run the affected step until the entry is answered; continue only with other tasks that do not touch the same environment. A secret found in Git, logs, or output stops the whole loop until it is rotated.
 
 - the target account, cluster, namespace, host, or environment is ambiguous;
 - a plan includes unexpected resource deletion/replacement, state loss, or irreversible migration;

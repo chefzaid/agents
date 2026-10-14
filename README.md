@@ -18,6 +18,7 @@ can be applied to projects, versioned, reviewed, and improved over time.
 
 1. Checkout this repo to the workspace where you have a project you want to implement.
 2. Copy TODO.md to your project and adjust it with the features and requirements you want.
+   Keep its **Bugs to fix** section, where agents log every bug or issue they find, and its **Needs Input** section, where they park only the parts of a task that wait on your decision. Answer under a **Needs Input** entry and the next agent run picks it up.
 3. Instruct your AI agent to apply the workflow you are interested in against another project in your workspace.
 
 ## Authoring Guidelines
