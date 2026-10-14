@@ -2,9 +2,18 @@
 
 Sample backlog file to be copied into projects and adapted for the project-specific features. Then used with the current repo's agentic workflows.
 
-## Bugs to fix
+## FIXME
 
-- [ ] Describe a bug found during testing, with steps to reproduce.
+Bugs and issues found by any agent. Each entry says what is wrong, where, and how to reproduce it.
+
+- [ ] Describe a bug found during testing, with steps to reproduce. *(found by: Testing Agent)*
+
+## Needs Input
+
+Parts of tasks that cannot advance without the owner's decision or information. Only the part needing input is set aside here; the rest of the task keeps moving. Answer under the item, and the next agent run applies the answer and removes the entry.
+
+- [ ] Which staging environment and test account should the end-to-end tests use? *(task: Big Feature › Deploy to staging; asked by: Infra Agent)*
+  - Answer:
 
 ## Big Feature
 

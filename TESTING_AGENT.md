@@ -6,11 +6,19 @@ This file governs the automated, iterative testing cycle for the application's u
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Scan the file `TODO.md` and `docs/features.md` and identify the **highest-priority user flow or UI feature** that hasn't been tested in the current session. If every flow has been tested, stop the loop.
+1. **DISCOVER:** Scan the file `TODO.md` and `docs/features.md` and identify the **highest-priority user flow or UI feature** that hasn't been tested in the current session. Include flows whose **Needs Input** entries the owner has answered, and skip only the parts still waiting there. If every flow has been tested, stop the loop.
 2. **PLAN:** Map out the exact visual navigation path, expected behaviors, element interactions, and critical data inputs needed to test the target UI feature. You can group correlated features together to test them all in one shot.
 3. **EXECUTE:** Spin up a Chromium-based browser (headless preferably) and interact with the live UI environment to run the test flow. Observe layout rendering, state transitions, and responsive behavior. Don't run unit, integration, or e2e test suites, do real world live browser-based tests.
 4. **RECURRENT CHECKS:** Immediately pass the testing session and its results through the **Recurrent UI Validation Checklist** below.
-5. **REPORT & REPEAT:** Document any bugs, visual defects, or functional failures in the `TODO.md` of the target project (under the **Bugs to fix** section), skipping any already listed. If the test passes, log the successful execution run. Move to the next task by restarting the loop at Step 1.
+5. **REPORT & REPEAT:** Record findings in the `TODO.md` of the target project following the **TODO Logging Rules** below. If the test passes, log the successful execution run. Move to the next task by restarting the loop at Step 1.
+
+---
+
+## TODO Logging Rules
+
+- **FIXME:** Every bug, visual defect, accessibility failure, or functional failure goes in **FIXME** with the page or flow, the viewport and browser, steps to reproduce, expected versus actual result, and a screenshot path when one was captured. Skip issues already listed. Keep testing the rest of the flow after logging; do not try to fix the code.
+- **Needs Input:** When a check cannot run or be judged without the owner (expected behavior is undocumented or contradictory, test credentials, accounts, or seed data are missing, or an environment is unreachable), add one entry to **Needs Input** with the precise question and the flow it blocks. Set aside only that check and continue with the rest of the flow and the next flows.
+- **Answers:** When an entry in **Needs Input** has an answer, run the waiting check on the next loop, then remove the entry.
 
 ---
 
