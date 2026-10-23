@@ -1,4 +1,4 @@
-# Continuous Execution Loop
+# Continuous Coding Loop
 
 This file governs the automated, iterative coding cycle for this codebase. Follow this loop sequentially, processing one task at a time.
 
@@ -6,11 +6,11 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 
 ## The Master Loop Control
 
-1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first, then any **Needs Input** entry the owner has answered; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. Skip items marked blocked and items whose only remaining work is waiting in **Needs Input**. If no eligible item remains, stop the loop.
+1. **DISCOVER:** Scan the file `TODO.md` and pick an open item from **Bugs to fix** first, then any **Needs Input** entry the owner has answered; otherwise identify the **simplest, lowest-complexity task** that is not yet implemented. Skip items marked blocked unless their referenced bug is fixed and items whose only remaining work is waiting in **Needs Input**. If no eligible item remains, stop the loop.
 2. **PLAN:** Write a concise implementation plan for the task at hand, including acceptance criteria, files to modify, tests to update, and any other relevant details. If part of the task needs the owner's decision or information (an unclear requirement, a product choice, a missing credential or external account), record that part in **Needs Input** following the **TODO Logging Rules** below and plan only the rest.
 3. **IMPLEMENT:** Write the clean, minimal code required to satisfy the task requirements. Log any bug or issue found along the way that is outside this task in **Bugs to fix** instead of fixing it now.
 4. **RECURRENT CHECKS:** Immediately pass the new implementation through the **Recurrent Tasks Checklist** below.
-5. **DONE:** Mark the task as done in `TODO.md` once all related items are completed. If only the parts recorded in **Needs Input** remain, leave the task open and note which parts are done. If a check cannot pass, log the cause in **Bugs to fix**, mark the task as blocked with a reference to that entry, and revert or set aside its unfinished changes.
+5. **DONE:** Mark the task as done in `TODO.md` once all related items are completed. If only the parts recorded in **Needs Input** remain, leave the task open and note which parts are done. If a check cannot pass, log the cause in **Bugs to fix**, mark the task as blocked by appending *(blocked: see Bugs to fix › <entry>)*, and revert or set aside its unfinished changes.
 6. **COMMIT & REPEAT:** Create a clean Git commit for the task, including the `TODO.md` update, with a very brief message without putting any co-author. Then restart the loop at Step 1.
 
 ---
@@ -29,7 +29,7 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 ### Phase 1: Implementation & UI Implementation
 - [ ] **Code Implementation:** Ensure that the feature is fully implemented, no dead code remains, and all edge cases are handled.
 - [ ] **UI Implementation:** Ensure that the feature has its corresponding UI implemented, if applicable, and that it is fully functional, visually consistent with the rest of the application, and free of visual glitches, misaligned elements, or broken interactions.
-- [ ] **Full Implementation:** Ensure that there are no mocked services or hardcoded values, and that it is fully localized for all supported languages.
+- [ ] **Full Implementation:** Ensure that there are no mocked services or hardcoded values, and that it is fully localized for all supported languages if the project is localized.
 
 ### Phase 2: Code Decomposition & Architecture
 - [ ] **File Length Check:** Verify that no modified or newly created file exceeds 500 lines of code (LOC). If it does, split it into modular, single-responsibility components or services.
@@ -44,7 +44,7 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 
 ### Phase 4: Static Analysis & Quality Gates
 - [ ] **Linting & Formatting:** Run the project's linter and formatter scripts over the changed files. Fix all structural style warnings automatically.
-- [ ] **Workspace Health:** Inspect the compiler/IDE "Problems" tab outputs and resolve 100% of errors, warnings, or type mismatches.
+- [ ] **Workspace Health:** Run the project's compiler and type checker and resolve 100% of errors, warnings, or type mismatches.
 
 ### Phase 5: Security Hardening (OWASP Top 10 Guard)
 - [ ] **Input & Injection Shielding:** Ensure all user inputs, parameters, and query bindings related to the new feature are fully sanitized or strictly parameterized.
@@ -60,9 +60,9 @@ This file governs the automated, iterative coding cycle for this codebase. Follo
 - [ ] **Efficiency Audit:** Optimize any heavy loop operations, multithreading, or network queries.
 
 ### Phase 7: Test Coverage Gate
-- [ ] **Run Test Suites:** Run the entire test suite across frontend and backend environments.
-- [ ] **Coverage Enforcement:** Verify code coverage remains strictly **above 85%** for both layers. If the new code drops the average or lacks testing, author unit/integration specs until the 85%+ target is met.
-- [ ] **Critical Path Testing:** Add Playwright tests to ensure that the new functionality works as expected in end-to-end scenarios.
+- [ ] **Run Test Suites:** Run the entire test suite across every layer the project has (e.g., frontend and backend).
+- [ ] **Coverage Enforcement:** Verify code coverage remains strictly **above 85%** for each layer. If the new code drops the average or lacks testing, author unit/integration specs until the 85%+ target is met.
+- [ ] **Critical Path Testing:** If the project has a UI, add Playwright tests to ensure that the new functionality works as expected in end-to-end scenarios.
 - [ ] **Regression Check:** Confirm that no existing features are broken by the new implementation.
 
 ### Phase 8: Documentation & Dependency Sync
